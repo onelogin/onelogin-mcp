@@ -1,7 +1,7 @@
 {
   "name": "onelogin-mcp",
   "version": "1.0.0",
-  "description": "OneLogin MCP Server for Claude Code",
+  "description": "OneLogin MCP Server",
   "module": "index.js",
   "type": "module",
   "private": true,
