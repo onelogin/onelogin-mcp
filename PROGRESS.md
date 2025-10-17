@@ -216,6 +216,21 @@ claude mcp add onelogin-shadow \
 - Follows standard MCP pattern (same as Jira, GitHub, etc.)
 
 ### Recent Changes
+- **2025-10-17 (Session 7)**: README Installation Instructions Enhancement
+  - ✅ Improved installation path guidance with prominent IMPORTANT callout
+  - ✅ Added step-by-step `pwd` command instructions to find installation path
+  - ✅ Changed path placeholders from `/Users/yourname/` to `/REPLACE/WITH/YOUR/PATH/` for visibility
+  - ✅ Added Windows-specific configuration example (previously missing)
+  - ✅ Created new troubleshooting section for "spawn bun ENOENT" errors
+  - ✅ Documented full Bun path workaround for macOS PATH issues
+  - ✅ Enhanced existing troubleshooting with JSONLint reference and absolute path requirements
+  - ✅ Updated tool description coverage metrics from 72% to 100% throughout README
+  - Repository now addresses most common Claude Desktop installation issue
+
+  **Commits**:
+  - `ca1fd0c` - docs: improve installation instructions and troubleshooting
+  - `3e1aaab` - docs: update PROGRESS.md with 100% tool description coverage
+
 - **2025-10-16 (Session 6)**: Achieved 100% Tool Description Coverage
   - ✅ Enhanced final 18 tool descriptions (remaining Tier 4 tools)
   - ✅ Progress: 65/65 tools (100%) now have rich contextual descriptions
