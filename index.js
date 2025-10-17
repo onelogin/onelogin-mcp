@@ -81,7 +81,7 @@ class OneLoginMcpServer {
       tools: [
         {
           name: 'list_users',
-          description: 'List OneLogin users with optional filters. Returns user data and x-request-id for log tracing.',
+          description: 'Get a paginated list of users in a OneLogin account (50 users per page). Can filter by user properties including custom attributes. For efficient syncing between OneLogin and another system, use the updated_since parameter to return only users that changed since last check. Returns user data and x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -115,7 +115,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_user',
-          description: 'Get detailed information about a specific OneLogin user by ID. Returns user data and x-request-id for log tracing.',
+          description: 'Get a single user from a OneLogin account by user ID. If you don\'t know the user\'s ID, use list_users to find it. Returns complete user data including custom attributes, roles, status, and x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -130,7 +130,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'create_user',
-          description: 'Create a new OneLogin user. Returns created user data and x-request-id.',
+          description: 'Create a new user in OneLogin. Users without a password get status 7 (Password Pending) and cannot log in until password is set. PKI certificates require this initial status. IMPORTANT: No invite email is sent when users are created via this API. Mappings run async by default (use mappings=sync query parameter to get mapped values in response). Returns created user data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -157,7 +157,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'update_user',
-          description: 'Update an existing OneLogin user. Returns updated user data and x-request-id.',
+          description: 'Update user attributes including passwords and custom attributes. To update roles, use assign_role_to_user or remove_role_from_user instead. Mappings run async by default (use mappings=sync query parameter to get mapped values in response). Passwords validate against User Policy by default (use validate_policy=false to skip). Returns updated user data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -367,7 +367,7 @@ class OneLoginMcpServer {
         // Apps tools
         {
           name: 'list_apps',
-          description: 'List OneLogin apps with optional filters. Returns app data and x-request-id for log tracing.',
+          description: 'Get a list of all apps in a OneLogin account with pagination support (max 1000 per page). Can filter by connector_id or auth_method (0=Password, 1=OpenId, 2=SAML, 3=API, 4=Google, 6=Forms, 7=WSFED, 8=OpenId Connect). Use name parameter with wildcard (*) for partial name search (e.g., name=workday*). Returns app data and x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -511,7 +511,7 @@ class OneLoginMcpServer {
         // Roles tools
         {
           name: 'list_roles',
-          description: 'List OneLogin roles with optional filters. Returns role data and x-request-id for log tracing.',
+          description: 'Get a list of roles with pagination and sorting support (max 650 per page). Can filter by name, app_id, or app_name. Use fields parameter to include related data (apps, users, admins) in response. Returns role data and x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -548,7 +548,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'assign_role_to_user',
-          description: 'Assign one or more roles to a OneLogin user. Returns updated user data and x-request-id.',
+          description: 'Assign one or more roles to a OneLogin user by providing an array of role IDs. This is the recommended way to manage user roles (rather than using update_user). Returns updated user data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
