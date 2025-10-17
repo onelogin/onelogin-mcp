@@ -203,7 +203,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'unlock_user',
-          description: 'Unlock a locked OneLogin user account. Returns success status and x-request-id.',
+          description: 'Unlock a locked user in OneLogin. The API checks if the user is locked, calls for an unlock, and returns a JSON response with successful or unsuccessful completion. Returns "User unlocked" message on success or error if user cannot be unlocked. Returns status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -218,7 +218,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_user_apps',
-          description: 'Get apps assigned to a user. Returns app list and x-request-id for log tracing.',
+          description: 'Get a list of apps assigned to a given user. Use ignore_visibility parameter (defaults to false) to return all apps regardless of portal visibility setting. Returns app list with provisioning status, icons, and login IDs, plus x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -233,7 +233,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'list_user_custom_attributes',
-          description: 'List custom attributes for a user. Returns custom attribute data and x-request-id for log tracing.',
+          description: 'Get a list of custom attribute definitions in a OneLogin account (not user-specific values). Returns account-wide custom attribute definitions with ID, name, shortname, and position. Use this to discover available custom attributes before querying user-specific values. Returns custom attribute data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -248,7 +248,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_user_custom_attribute',
-          description: 'Get a specific custom attribute for a user. Returns custom attribute data and x-request-id for log tracing.',
+          description: 'Get a single custom attribute definition by ID. If you don\'t know the attribute ID, use list_user_custom_attributes to find it. Returns custom attribute data (id, name, shortname, position) and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -267,7 +267,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'create_user_custom_attribute',
-          description: 'Create a custom attribute for a user. Returns created custom attribute data and x-request-id.',
+          description: 'Create a new custom attribute in OneLogin. Requires both name (descriptive name) and shortname (unique identifier). The shortname must be unique across the account or creation will fail. Returns created custom attribute data with new ID and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -290,7 +290,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'update_user_custom_attribute',
-          description: 'Update a custom attribute for a user. Returns updated custom attribute data and x-request-id.',
+          description: 'Update a custom attribute definition in OneLogin. Both name and shortname are required. If you don\'t know the attribute ID, use list_user_custom_attributes to find it. Returns updated custom attribute data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -317,7 +317,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_user_custom_attribute',
-          description: 'Delete a custom attribute from a user. Returns success status and x-request-id.',
+          description: 'Permanently delete a custom attribute from OneLogin. WARNING: This operation cannot be undone. All users with this attribute will have the field and any contained data removed. Returns 204 No Content on success and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -592,7 +592,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'create_role',
-          description: 'Create a new role. Returns created role data and x-request-id.',
+          description: 'Create a new role with optional apps, users, and admins assigned during creation. Can assign multiple apps (array of app IDs) and users (array of user IDs) in a single call for efficient setup. Returns created role data with new role ID and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -858,7 +858,7 @@ class OneLoginMcpServer {
         // MFA tools
         {
           name: 'get_available_factors',
-          description: 'Get available authentication factors for a user. Returns factor list and x-request-id for log tracing.',
+          description: 'Get available MFA factors for a user. Supports OneLogin SMS, Voice, Email, Protect, and Google Authenticator. Use this before enrolling a factor to see what factors are available. Returns factor list with IDs and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -873,7 +873,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'enroll_factor',
-          description: 'Enroll a user in an authentication factor. Returns enrollment data and x-request-id.',
+          description: 'Initiate MFA enrollment for a user. Status will be "pending" if confirmation required (Google Authenticator, OneLogin Protect) or "accepted" if verified=true (SMS, Voice, Email with pre-verified values). For OTP factors, returns verification_token and totp_url for QR code display. For Voice, user must type OTP into phone for verification. Supports custom_message for SMS (max 160 chars) and redirect_to for Email MagicLink. Returns enrollment data with registration ID, status, and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -942,7 +942,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'activate_factor',
-          description: 'Activate an enrolled authentication factor. Returns activation status and x-request-id.',
+          description: 'Trigger an MFA challenge by sending SMS, Voice, Email, or Push notification containing OTP or Magic Link. Generates a verification_id that must be used with verify_factor to validate the OTP. Use expires_in (120-900 seconds, default 120) to control OTP expiration. Supports custom_message for SMS and redirect_to for Email MagicLink. Returns verification data with verification_id, device_id, expires_at, and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
