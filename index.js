@@ -14,6 +14,7 @@ import * as roleTools from './lib/tools/roles.js';
 import * as eventTools from './lib/tools/events.js';
 import * as groupTools from './lib/tools/groups.js';
 import * as privilegeTools from './lib/tools/privileges.js';
+import * as mfaTools from './lib/tools/mfa.js';
 
 class OneLoginMcpServer {
   constructor() {
@@ -198,6 +199,169 @@ class OneLoginMcpServer {
             additionalProperties: false
           }
         },
+        {
+          name: 'unlock_user',
+          description: 'Unlock a locked OneLogin user account. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID to unlock'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_user_apps',
+          description: 'Get apps assigned to a user. Returns app list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'list_user_custom_attributes',
+          description: 'List custom attributes for a user. Returns custom attribute data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_user_custom_attribute',
+          description: 'Get a specific custom attribute for a user. Returns custom attribute data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              attribute_id: {
+                type: 'number',
+                description: 'The custom attribute ID'
+              }
+            },
+            required: ['user_id', 'attribute_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'create_user_custom_attribute',
+          description: 'Create a custom attribute for a user. Returns created custom attribute data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Custom attribute name'
+              },
+              value: {
+                type: 'string',
+                description: 'Custom attribute value'
+              }
+            },
+            required: ['user_id', 'name', 'value'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'update_user_custom_attribute',
+          description: 'Update a custom attribute for a user. Returns updated custom attribute data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              attribute_id: {
+                type: 'number',
+                description: 'The custom attribute ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New custom attribute name'
+              },
+              value: {
+                type: 'string',
+                description: 'New custom attribute value'
+              }
+            },
+            required: ['user_id', 'attribute_id'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'delete_user_custom_attribute',
+          description: 'Delete a custom attribute from a user. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              attribute_id: {
+                type: 'number',
+                description: 'The custom attribute ID'
+              }
+            },
+            required: ['user_id', 'attribute_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_user_privileges',
+          description: 'Get privileges assigned to a user. Returns privilege data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_user_delegated_privileges',
+          description: 'Get delegated privileges for a user. Returns delegated privilege data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
         // Apps tools
         {
           name: 'list_apps',
@@ -269,6 +433,77 @@ class OneLoginMcpServer {
             },
             required: ['app_id'],
             additionalProperties: true
+          }
+        },
+        {
+          name: 'create_app',
+          description: 'Create a new OneLogin app. Returns created app data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              connector_id: {
+                type: 'number',
+                description: 'Connector ID for the app type'
+              },
+              name: {
+                type: 'string',
+                description: 'App name'
+              },
+              description: {
+                type: 'string',
+                description: 'App description'
+              }
+            },
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'delete_app',
+          description: 'Delete an app. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              app_id: {
+                type: 'number',
+                description: 'The OneLogin app ID to delete'
+              }
+            },
+            required: ['app_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'delete_app_parameter',
+          description: 'Delete a parameter from an app. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              app_id: {
+                type: 'number',
+                description: 'The OneLogin app ID'
+              },
+              param_id: {
+                type: 'number',
+                description: 'The parameter ID to delete'
+              }
+            },
+            required: ['app_id', 'param_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_app_users',
+          description: 'Get users assigned to an app. Returns user list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              app_id: {
+                type: 'number',
+                description: 'The OneLogin app ID'
+              }
+            },
+            required: ['app_id'],
+            additionalProperties: false
           }
         },
         // Roles tools
@@ -353,6 +588,191 @@ class OneLoginMcpServer {
             additionalProperties: false
           }
         },
+        {
+          name: 'create_role',
+          description: 'Create a new role. Returns created role data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Role name'
+              },
+              apps: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of app IDs to assign to the role'
+              },
+              users: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of user IDs to assign to the role'
+              }
+            },
+            required: ['name'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'update_role',
+          description: 'Update an existing role. Returns updated role data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID to update'
+              },
+              name: {
+                type: 'string',
+                description: 'New role name'
+              },
+              apps: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of app IDs to assign to the role'
+              },
+              users: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of user IDs to assign to the role'
+              }
+            },
+            required: ['role_id'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'delete_role',
+          description: 'Delete a role. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID to delete'
+              }
+            },
+            required: ['role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_role_apps',
+          description: 'Get apps assigned to a role. Returns app list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              }
+            },
+            required: ['role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'set_role_apps',
+          description: 'Set apps for a role (replaces existing apps). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              },
+              app_ids: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of app IDs to assign to the role'
+              }
+            },
+            required: ['role_id', 'app_ids'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_role_users',
+          description: 'Get users assigned to a role. Returns user list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              }
+            },
+            required: ['role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_role_admins',
+          description: 'Get admins assigned to a role. Returns admin list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              }
+            },
+            required: ['role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'add_role_admins',
+          description: 'Add admins to a role. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              },
+              admin_ids: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of admin user IDs to add to the role'
+              }
+            },
+            required: ['role_id', 'admin_ids'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'remove_role_admin',
+          description: 'Remove an admin from a role. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              role_id: {
+                type: 'number',
+                description: 'The OneLogin role ID'
+              },
+              admin_id: {
+                type: 'number',
+                description: 'The admin user ID to remove from the role'
+              }
+            },
+            required: ['role_id', 'admin_id'],
+            additionalProperties: false
+          }
+        },
         // Events tools (API v1)
         {
           name: 'list_events',
@@ -432,6 +852,236 @@ class OneLoginMcpServer {
             },
             additionalProperties: false
           }
+        },
+        // MFA tools
+        {
+          name: 'get_available_factors',
+          description: 'Get available authentication factors for a user. Returns factor list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'enroll_factor',
+          description: 'Enroll a user in an authentication factor. Returns enrollment data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor (e.g., "Google Authenticator", "OneLogin SMS", "OneLogin Voice")'
+              },
+              display_name: {
+                type: 'string',
+                description: 'Display name for the factor'
+              },
+              verified: {
+                type: 'boolean',
+                description: 'Whether the factor is pre-verified'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'verify_factor_enrollment_otp',
+          description: 'Verify enrollment of an authentication factor using OTP. Returns verification status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              },
+              otp_token: {
+                type: 'string',
+                description: 'One-time password token'
+              }
+            },
+            required: ['user_id', 'factor_type', 'otp_token'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'verify_factor_enrollment_poll',
+          description: 'Verify enrollment of OneLogin Voice & Protect using polling. Returns verification status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'activate_factor',
+          description: 'Activate an enrolled authentication factor. Returns activation status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_factor_status',
+          description: 'Get enrolled authentication factor status for a user. Returns factor status and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'verify_factor',
+          description: 'Verify an authentication factor using OTP or device ID. Returns verification status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              },
+              otp_token: {
+                type: 'string',
+                description: 'One-time password token'
+              },
+              device_id: {
+                type: 'string',
+                description: 'Device ID for push notifications'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'verify_factor_poll',
+          description: 'Verify an authentication factor using polling. Returns verification status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'trigger_factor_verification',
+          description: 'Trigger authentication factor verification (sends push notification). Returns trigger status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'remove_factor',
+          description: 'Remove an authentication factor from a user. Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              factor_type: {
+                type: 'string',
+                description: 'Type of authentication factor'
+              }
+            },
+            required: ['user_id', 'factor_type'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'generate_mfa_token',
+          description: 'Generate an MFA token for a user. Returns MFA token data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              user_id: {
+                type: 'number',
+                description: 'The OneLogin user ID'
+              },
+              reusable: {
+                type: 'boolean',
+                description: 'Whether the token is reusable'
+              },
+              expires_in: {
+                type: 'number',
+                description: 'Token expiration time in seconds'
+              }
+            },
+            required: ['user_id'],
+            additionalProperties: true
+          }
         }
       ],
     }));
@@ -464,6 +1114,42 @@ class OneLoginMcpServer {
             result = await userTools.deleteUser(this.api, args);
             break;
 
+          case 'unlock_user':
+            result = await userTools.unlockUser(this.api, args);
+            break;
+
+          case 'get_user_apps':
+            result = await userTools.getUserApps(this.api, args);
+            break;
+
+          case 'list_user_custom_attributes':
+            result = await userTools.listUserCustomAttributes(this.api, args);
+            break;
+
+          case 'get_user_custom_attribute':
+            result = await userTools.getUserCustomAttribute(this.api, args);
+            break;
+
+          case 'create_user_custom_attribute':
+            result = await userTools.createUserCustomAttribute(this.api, args);
+            break;
+
+          case 'update_user_custom_attribute':
+            result = await userTools.updateUserCustomAttribute(this.api, args);
+            break;
+
+          case 'delete_user_custom_attribute':
+            result = await userTools.deleteUserCustomAttribute(this.api, args);
+            break;
+
+          case 'get_user_privileges':
+            result = await userTools.getUserPrivileges(this.api, args);
+            break;
+
+          case 'get_user_delegated_privileges':
+            result = await userTools.getUserDelegatedPrivileges(this.api, args);
+            break;
+
           // Apps tools
           case 'list_apps':
             result = await appTools.listApps(this.api, args || {});
@@ -475,6 +1161,22 @@ class OneLoginMcpServer {
 
           case 'update_app':
             result = await appTools.updateApp(this.api, args);
+            break;
+
+          case 'create_app':
+            result = await appTools.createApp(this.api, args);
+            break;
+
+          case 'delete_app':
+            result = await appTools.deleteApp(this.api, args);
+            break;
+
+          case 'delete_app_parameter':
+            result = await appTools.deleteAppParameter(this.api, args);
+            break;
+
+          case 'get_app_users':
+            result = await appTools.getAppUsers(this.api, args);
             break;
 
           // Roles tools
@@ -492,6 +1194,42 @@ class OneLoginMcpServer {
 
           case 'remove_role_from_user':
             result = await roleTools.removeRoleFromUser(this.api, args);
+            break;
+
+          case 'create_role':
+            result = await roleTools.createRole(this.api, args);
+            break;
+
+          case 'update_role':
+            result = await roleTools.updateRole(this.api, args);
+            break;
+
+          case 'delete_role':
+            result = await roleTools.deleteRole(this.api, args);
+            break;
+
+          case 'get_role_apps':
+            result = await roleTools.getRoleApps(this.api, args);
+            break;
+
+          case 'set_role_apps':
+            result = await roleTools.setRoleApps(this.api, args);
+            break;
+
+          case 'get_role_users':
+            result = await roleTools.getRoleUsers(this.api, args);
+            break;
+
+          case 'get_role_admins':
+            result = await roleTools.getRoleAdmins(this.api, args);
+            break;
+
+          case 'add_role_admins':
+            result = await roleTools.addRoleAdmins(this.api, args);
+            break;
+
+          case 'remove_role_admin':
+            result = await roleTools.removeRoleAdmin(this.api, args);
             break;
 
           // Events tools
@@ -515,6 +1253,51 @@ class OneLoginMcpServer {
           // Privileges tools
           case 'list_privileges':
             result = await privilegeTools.listPrivileges(this.api, args || {});
+            break;
+
+          // MFA tools
+          case 'get_available_factors':
+            result = await mfaTools.getAvailableFactors(this.api, args);
+            break;
+
+          case 'enroll_factor':
+            result = await mfaTools.enrollFactor(this.api, args);
+            break;
+
+          case 'verify_factor_enrollment_otp':
+            result = await mfaTools.verifyFactorEnrollmentOTP(this.api, args);
+            break;
+
+          case 'verify_factor_enrollment_poll':
+            result = await mfaTools.verifyFactorEnrollmentPoll(this.api, args);
+            break;
+
+          case 'activate_factor':
+            result = await mfaTools.activateFactor(this.api, args);
+            break;
+
+          case 'get_factor_status':
+            result = await mfaTools.getFactorStatus(this.api, args);
+            break;
+
+          case 'verify_factor':
+            result = await mfaTools.verifyFactor(this.api, args);
+            break;
+
+          case 'verify_factor_poll':
+            result = await mfaTools.verifyFactorPoll(this.api, args);
+            break;
+
+          case 'trigger_factor_verification':
+            result = await mfaTools.triggerFactorVerification(this.api, args);
+            break;
+
+          case 'remove_factor':
+            result = await mfaTools.removeFactor(this.api, args);
+            break;
+
+          case 'generate_mfa_token':
+            result = await mfaTools.generateMFAToken(this.api, args);
             break;
 
           default:
