@@ -15,6 +15,8 @@ import * as eventTools from './lib/tools/events.js';
 import * as groupTools from './lib/tools/groups.js';
 import * as privilegeTools from './lib/tools/privileges.js';
 import * as mfaTools from './lib/tools/mfa.js';
+import * as samlTools from './lib/tools/saml.js';
+import * as inviteLinkTools from './lib/tools/invite-links.js';
 
 class OneLoginMcpServer {
   constructor() {
@@ -1082,6 +1084,305 @@ class OneLoginMcpServer {
             required: ['user_id'],
             additionalProperties: true
           }
+        },
+        // SAML Assertions tools
+        {
+          name: 'generate_saml_assertion',
+          description: 'Generate a SAML assertion for a user. Returns SAML assertion data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              username_or_email: {
+                type: 'string',
+                description: 'Username or email address'
+              },
+              password: {
+                type: 'string',
+                description: 'User password'
+              },
+              app_id: {
+                type: 'string',
+                description: 'App ID to generate assertion for'
+              },
+              subdomain: {
+                type: 'string',
+                description: 'Account subdomain'
+              },
+              ip_address: {
+                type: 'string',
+                description: 'IP address (optional)'
+              }
+            },
+            required: ['username_or_email', 'password', 'app_id', 'subdomain'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'verify_saml_assertion_factor',
+          description: 'Verify a SAML assertion factor using MFA. Returns verification data and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              app_id: {
+                type: 'string',
+                description: 'App ID'
+              },
+              device_id: {
+                type: 'string',
+                description: 'Device ID for MFA'
+              },
+              state_token: {
+                type: 'string',
+                description: 'State token from initial assertion'
+              },
+              otp_token: {
+                type: 'string',
+                description: 'One-time password token (optional)'
+              },
+              do_not_notify: {
+                type: 'boolean',
+                description: 'Whether to skip notification (optional)'
+              }
+            },
+            required: ['app_id', 'device_id', 'state_token'],
+            additionalProperties: false
+          }
+        },
+        // Invite Links tools (API v1)
+        {
+          name: 'generate_invite_link',
+          description: 'Generate an invite link for a user (API v1 - Rate Limited). Returns invite link data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              email: {
+                type: 'string',
+                description: 'User email address'
+              },
+              firstname: {
+                type: 'string',
+                description: 'User first name (optional)'
+              },
+              lastname: {
+                type: 'string',
+                description: 'User last name (optional)'
+              },
+              role_ids: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of role IDs to assign (optional)'
+              }
+            },
+            required: ['email'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'send_invite_link',
+          description: 'Send an invite link to a user via email (API v1 - Rate Limited). Returns send status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              email: {
+                type: 'string',
+                description: 'User email address'
+              },
+              firstname: {
+                type: 'string',
+                description: 'User first name (optional)'
+              },
+              lastname: {
+                type: 'string',
+                description: 'User last name (optional)'
+              },
+              role_ids: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                },
+                description: 'Array of role IDs to assign (optional)'
+              },
+              personal_email: {
+                type: 'string',
+                description: 'Personal email to send invite to (optional)'
+              }
+            },
+            required: ['email'],
+            additionalProperties: false
+          }
+        },
+        // Privilege CRUD tools (API v1)
+        {
+          name: 'get_privilege',
+          description: 'Get a specific privilege by ID (API v1 - Rate Limited). Returns privilege data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              }
+            },
+            required: ['privilege_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'create_privilege',
+          description: 'Create a new privilege (API v1 - Rate Limited). Returns created privilege data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Privilege name'
+              }
+            },
+            required: ['name'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'update_privilege',
+          description: 'Update an existing privilege (API v1 - Rate Limited). Returns updated privilege data and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID to update'
+              },
+              name: {
+                type: 'string',
+                description: 'New privilege name'
+              }
+            },
+            required: ['privilege_id'],
+            additionalProperties: true
+          }
+        },
+        {
+          name: 'delete_privilege',
+          description: 'Delete a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID to delete'
+              }
+            },
+            required: ['privilege_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_privilege_roles',
+          description: 'Get roles assigned to a privilege (API v1 - Rate Limited). Returns role list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              }
+            },
+            required: ['privilege_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'assign_role_to_privilege',
+          description: 'Assign a role to a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              },
+              role_id: {
+                type: 'number',
+                description: 'The role ID to assign'
+              }
+            },
+            required: ['privilege_id', 'role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'remove_role_from_privilege',
+          description: 'Remove a role from a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              },
+              role_id: {
+                type: 'number',
+                description: 'The role ID to remove'
+              }
+            },
+            required: ['privilege_id', 'role_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'get_privilege_users',
+          description: 'Get users assigned to a privilege (API v1 - Rate Limited). Returns user list and x-request-id for log tracing.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              }
+            },
+            required: ['privilege_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'assign_users_to_privilege',
+          description: 'Assign users to a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              },
+              user_id: {
+                type: 'number',
+                description: 'The user ID to assign'
+              }
+            },
+            required: ['privilege_id', 'user_id'],
+            additionalProperties: false
+          }
+        },
+        {
+          name: 'remove_user_from_privilege',
+          description: 'Remove a user from a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              privilege_id: {
+                type: 'string',
+                description: 'The OneLogin privilege ID'
+              },
+              user_id: {
+                type: 'number',
+                description: 'The user ID to remove'
+              }
+            },
+            required: ['privilege_id', 'user_id'],
+            additionalProperties: false
+          }
         }
       ],
     }));
@@ -1298,6 +1599,65 @@ class OneLoginMcpServer {
 
           case 'generate_mfa_token':
             result = await mfaTools.generateMFAToken(this.api, args);
+            break;
+
+          // SAML Assertions tools
+          case 'generate_saml_assertion':
+            result = await samlTools.generateSAMLAssertion(this.api, args);
+            break;
+
+          case 'verify_saml_assertion_factor':
+            result = await samlTools.verifySAMLAssertionFactor(this.api, args);
+            break;
+
+          // Invite Links tools
+          case 'generate_invite_link':
+            result = await inviteLinkTools.generateInviteLink(this.api, args);
+            break;
+
+          case 'send_invite_link':
+            result = await inviteLinkTools.sendInviteLink(this.api, args);
+            break;
+
+          // Privilege CRUD tools
+          case 'get_privilege':
+            result = await privilegeTools.getPrivilege(this.api, args);
+            break;
+
+          case 'create_privilege':
+            result = await privilegeTools.createPrivilege(this.api, args);
+            break;
+
+          case 'update_privilege':
+            result = await privilegeTools.updatePrivilege(this.api, args);
+            break;
+
+          case 'delete_privilege':
+            result = await privilegeTools.deletePrivilege(this.api, args);
+            break;
+
+          case 'get_privilege_roles':
+            result = await privilegeTools.getPrivilegeRoles(this.api, args);
+            break;
+
+          case 'assign_role_to_privilege':
+            result = await privilegeTools.assignRoleToPrivilege(this.api, args);
+            break;
+
+          case 'remove_role_from_privilege':
+            result = await privilegeTools.removeRoleFromPrivilege(this.api, args);
+            break;
+
+          case 'get_privilege_users':
+            result = await privilegeTools.getPrivilegeUsers(this.api, args);
+            break;
+
+          case 'assign_users_to_privilege':
+            result = await privilegeTools.assignUsersToPrivilege(this.api, args);
+            break;
+
+          case 'remove_user_from_privilege':
+            result = await privilegeTools.removeUserFromPrivilege(this.api, args);
             break;
 
           default:
