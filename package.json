@@ -1,0 +1,21 @@
+{
+  "name": "onelogin-mcp",
+  "version": "1.0.0",
+  "description": "OneLogin MCP Server for Claude Code",
+  "module": "index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "setup": "bun run setup.js",
+    "start": "bun run index.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.1"
+  }
+}
