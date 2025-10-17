@@ -778,7 +778,7 @@ class OneLoginMcpServer {
         // Events tools (API v1)
         {
           name: 'list_events',
-          description: 'List OneLogin events with optional filters (API v1 - Rate Limited). Returns event data and x-request-id.',
+          description: 'Get a paginated list of events in a OneLogin account (50 events per page). Can filter by event_type_id, user_id, client_id, directory_id, resolution, and date range (since/until with millisecond precision). Returns event data with user_name/actor_user_name (first+last name or email fallback), risk scores, IP addresses, and full event details. Returns x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -800,7 +800,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_event',
-          description: 'Get a specific event by ID (API v1). Returns event data and x-request-id.',
+          description: 'Get a single event by ID with complete event details including user names, timestamps, IP addresses, risk scores, and resolution data. Returns event data and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -813,7 +813,7 @@ class OneLoginMcpServer {
         // Groups tools (API v1)
         {
           name: 'list_groups',
-          description: 'List OneLogin groups with optional filters (API v1 - Rate Limited). Returns group data and x-request-id.',
+          description: 'Get a list of groups in a OneLogin account (50 groups per page). To find which group a user belongs to, use get_user. To add/remove users from groups, use update_user. Returns group data with ID, name, and reference (deprecated, always null). Returns x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -830,7 +830,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_group',
-          description: 'Get a specific group by ID (API v1). Returns group data and x-request-id.',
+          description: 'Get a single group by ID with group details. Returns group data with ID, name, and reference. Returns x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
