@@ -188,7 +188,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_user',
-          description: 'Delete a OneLogin user. Returns success status and x-request-id.',
+          description: 'Permanently delete a user from OneLogin. WARNING: This operation cannot be undone. The user will be deleted and will no longer be able to log in. If you don\'t know the user\'s ID, use list_users to find it. Returns 204 No Content on success and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -397,7 +397,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_app',
-          description: 'Get detailed information about a specific OneLogin app by ID. Returns app data and x-request-id for log tracing.',
+          description: 'Get configuration settings of an app. Useful for backing up app configuration or cloning apps - take the response and POST it to create_app to clone. Response payload is broken into sections (parameters, sso settings, configuration) that vary based on app type (SAML, OpenId Connect, etc.). Returns complete app configuration and x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -439,7 +439,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'create_app',
-          description: 'Create a new OneLogin app. Returns created app data and x-request-id.',
+          description: 'Create a new app based on a OneLogin connector. Minimum required: connector_id and name. If connector allows (check allows_new_parameters via List Connectors), custom parameters can be added during creation - any parameter not matching existing parameters will be auto-created. For complete app configuration options, do a get_app request on an app with the same connector. For OpenId Connect apps: response includes client_id and client_secret. Returns created app data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -461,7 +461,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_app',
-          description: 'Delete an app. Returns success status and x-request-id.',
+          description: 'Delete an app from OneLogin. WARNING: This operation is final and cannot be undone. If you don\'t know the app ID, use list_apps to find it. Returns 204 No Content on success and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -476,7 +476,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_app_parameter',
-          description: 'Delete a parameter from an app. Returns success status and x-request-id.',
+          description: 'Delete a custom parameter from an app. WARNING: This operation is final and cannot be undone. You cannot delete connector-level parameters (defined on underlying connector) - only custom app-specific parameters can be deleted. If you don\'t know the parameter ID, use get_app to retrieve app configuration with parameter IDs. Returns 204 No Content on success or 403 Forbidden if attempting to delete connector parameter. Returns x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -495,7 +495,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_app_users',
-          description: 'Get users assigned to an app. Returns user list and x-request-id for log tracing.',
+          description: 'Get a list of users assigned to an app (max 1000 users per page). Supports standard pagination. Returns user list with ID, firstname, lastname, username, and email for each user. Use to audit app access or find users to remove. Returns x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -533,7 +533,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_role',
-          description: 'Get detailed information about a specific OneLogin role by ID. Returns role data and x-request-id for log tracing.',
+          description: 'Get the base role object by ID. Role users, apps, and administrators are returned using sub-endpoints (get_role_users, get_role_apps, get_role_admins). Returns role data with ID and name, plus x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -621,7 +621,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'update_role',
-          description: 'Update an existing role. Returns updated role data and x-request-id.',
+          description: 'Update an existing role. Partial role updates are supported - you only need to provide the fields you want to change. Returns updated role ID and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -654,7 +654,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_role',
-          description: 'Delete a role. Returns success status and x-request-id.',
+          description: 'Delete a role from OneLogin. WARNING: This operation is final and cannot be undone. Returns 204 No Content on success and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -669,7 +669,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_role_apps',
-          description: 'Get apps assigned to a role. Returns app list and x-request-id for log tracing.',
+          description: 'Get applications assigned to a role. Supports pagination. Use assigned=false parameter to return apps not yet assigned to the role. Returns app list with ID, name, and icon_url, plus x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -684,7 +684,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'set_role_apps',
-          description: 'Set apps for a role (replaces existing apps). Returns success status and x-request-id.',
+          description: 'Assign applications to a role. IMPORTANT: Provide the complete list of app IDs to assign - this replaces all existing apps. To add or remove apps, you must submit the full desired app list, not a partial list. For example, if role has apps [123, 456] and you want to add 789, submit [123, 456, 789]. Returns array of assigned app IDs and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -706,7 +706,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_role_users',
-          description: 'Get users assigned to a role. Returns user list and x-request-id for log tracing.',
+          description: 'Get users assigned to a role. Supports pagination. Can include users not currently assigned using include_unassigned parameter. Supports filtering on first name, last name, username, and email address via name parameter. Returns user list with ID, name, username, added_by info, added_at timestamp, and assigned status. Returns x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -721,7 +721,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_role_admins',
-          description: 'Get admins assigned to a role. Returns admin list and x-request-id for log tracing.',
+          description: 'Get role administrators (users who can manage this role). Supports pagination. Can include admins not currently assigned using include_unassigned parameter. Supports filtering on first name, last name, username, and email address via name parameter. Returns admin list with ID, name, username, added_by info, added_at timestamp, and assigned status. Returns x-request-id for log tracing.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -736,7 +736,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'add_role_admins',
-          description: 'Add admins to a role. Returns success status and x-request-id.',
+          description: 'Assign users as administrators of a role. Role admins can manage the role and its assignments. Returns success status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -758,7 +758,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'remove_role_admin',
-          description: 'Remove an admin from a role. Returns success status and x-request-id.',
+          description: 'Remove a user from role administrators. The user will no longer be able to manage this role. Returns success status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
