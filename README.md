@@ -18,7 +18,7 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server that provides
 
 ### Key Features
 
-- **High-Quality Tool Descriptions**: 72% of tools enhanced with rich contextual information, warnings, and best practices
+- **High-Quality Tool Descriptions**: 100% of tools enhanced with rich contextual information, warnings, and best practices
 - **OAuth2 Authentication**: Automatic token management with 10-hour caching
 - **Multi-Environment Support**: Connect to multiple OneLogin instances (production, shadow, preprod)
 - **Datadog Integration**: Every response includes `x-request-id` for distributed tracing
@@ -63,6 +63,20 @@ Configuration is stored in `~/.config/onelogin-mcp/`:
 
 ### 3. Add to Claude Desktop
 
+**IMPORTANT**: You must update the file path in the configuration to match where you cloned the repository.
+
+#### Finding Your Installation Path
+
+The path depends on where you cloned the repository in step 1. To find the full path:
+
+```bash
+cd onelogin-mcp
+pwd
+# Example output: /Users/yourname/src/onelogin-mcp
+```
+
+Use the output from `pwd` followed by `/index.js` as your path in the configuration below.
+
 #### Single Environment Setup
 
 If you only need one OneLogin environment:
@@ -75,14 +89,25 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "onelogin": {
       "command": "bun",
-      "args": ["run", "/Users/yourname/src/onelogin-mcp/index.js"]
+      "args": ["run", "/REPLACE/WITH/YOUR/PATH/onelogin-mcp/index.js"]
     }
   }
 }
 ```
 
 **Windows:**
-Edit `%APPDATA%\Claude\claude_desktop_config.json`
+Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "onelogin": {
+      "command": "bun",
+      "args": ["run", "C:\\Users\\yourname\\src\\onelogin-mcp\\index.js"]
+    }
+  }
+}
+```
 
 #### Multiple Environment Setup (Recommended)
 
@@ -93,14 +118,14 @@ For production and non-production environments:
   "mcpServers": {
     "onelogin-prod": {
       "command": "bun",
-      "args": ["run", "/Users/yourname/src/onelogin-mcp/index.js"],
+      "args": ["run", "/REPLACE/WITH/YOUR/PATH/onelogin-mcp/index.js"],
       "env": {
         "ONELOGIN_SERVER": "Production"
       }
     },
     "onelogin-shadow": {
       "command": "bun",
-      "args": ["run", "/Users/yourname/src/onelogin-mcp/index.js"],
+      "args": ["run", "/REPLACE/WITH/YOUR/PATH/onelogin-mcp/index.js"],
       "env": {
         "ONELOGIN_SERVER": "Shadow"
       }
@@ -357,14 +382,44 @@ The `request_id` matches the `x-request-id` HTTP header, enabling request tracin
 
 ## Troubleshooting
 
+### "spawn bun ENOENT" or "Could not connect to MCP server" Errors
+
+This error means Claude Desktop cannot find the Bun runtime. To fix:
+
+1. **Verify Bun is installed**:
+   ```bash
+   which bun
+   # Should show: /Users/yourname/.bun/bin/bun (or similar)
+   ```
+
+2. **If Bun is not found**, install it:
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+3. **Restart Claude Desktop** completely (Cmd+Q on macOS, then reopen)
+
+4. **If still not working**, use the full path to Bun in your config:
+   ```json
+   {
+     "mcpServers": {
+       "onelogin": {
+         "command": "/Users/yourname/.bun/bin/bun",
+         "args": ["run", "/path/to/onelogin-mcp/index.js"]
+       }
+     }
+   }
+   ```
+
 ### MCP Server Not Appearing in Claude Desktop
 
 1. Check configuration file location:
    - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-2. Verify JSON syntax is valid
-3. Ensure absolute path to `index.js`
-4. Restart Claude Desktop completely (quit and relaunch)
+2. Verify JSON syntax is valid (use [JSONLint](https://jsonlint.com) if unsure)
+3. Ensure you updated the path to `index.js` to match your installation directory
+4. Verify the path is absolute (starts with `/` on macOS/Linux or `C:\` on Windows)
+5. Restart Claude Desktop completely (quit and relaunch)
 
 ### Authentication Errors
 
@@ -514,4 +569,4 @@ MIT
 
 ---
 
-**Quality Note**: 72% of tools (47/65) have been enhanced with rich contextual information including behavioral details, warnings, best practices, and workflow guidance to enable AI assistants to use them effectively.
+**Quality Note**: 100% of tools (65/65) have been enhanced with rich contextual information including behavioral details, warnings, best practices, and workflow guidance to enable AI assistants to use them effectively.
