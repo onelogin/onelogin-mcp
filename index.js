@@ -336,7 +336,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_user_privileges',
-          description: 'Get privileges assigned to a user. Returns privilege data and x-request-id for log tracing.',
+          description: 'Get all privileges directly assigned to a user (does not include privileges inherited through roles). IMPORTANT: Requires Delegated Administration subscription. Returns privilege list with IDs, names, descriptions, and policy statements. Use to audit user permissions. Returns x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -351,7 +351,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_user_delegated_privileges',
-          description: 'Get delegated privileges for a user. Returns delegated privilege data and x-request-id for log tracing.',
+          description: 'Get effective privileges for a user including both directly assigned privileges and privileges inherited through role membership. IMPORTANT: Requires Delegated Administration subscription. Returns comprehensive privilege list showing complete user permissions. Use to understand actual user access. Returns x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -843,7 +843,7 @@ class OneLoginMcpServer {
         // Privileges tools (API v1)
         {
           name: 'list_privileges',
-          description: 'List OneLogin privileges (API v1 - Rate Limited). Returns privilege data and x-request-id.',
+          description: 'List privileges created in a OneLogin account. IMPORTANT: Requires Delegated Administration subscription. Privileges define actions that can be performed on resources but don\'t grant access until assigned to a user or role. Returns privilege data with ID, name, description, and policy statement (API v1 - Rate Limited). Returns x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -900,7 +900,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'verify_factor_enrollment_otp',
-          description: 'Verify enrollment of an authentication factor using OTP. Returns verification status and x-request-id.',
+          description: 'Verify enrollment of Google Authenticator, SMS, Email, or Voice factors using OTP. Use after enroll_factor returns pending status. Provide the OTP code user received/generated. On success, factor becomes active. Returns verification status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -923,7 +923,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'verify_factor_enrollment_poll',
-          description: 'Verify enrollment of OneLogin Voice & Protect using polling. Returns verification status and x-request-id.',
+          description: 'Verify enrollment of OneLogin Voice and OneLogin Protect using polling. Use after enroll_factor for these factor types. Poll periodically until user completes verification (types OTP into phone for Voice, or approves on device for Protect). Returns verification status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -961,7 +961,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_factor_status',
-          description: 'Get enrolled authentication factor status for a user. Returns factor status and x-request-id for log tracing.',
+          description: 'Get status of an enrolled authentication factor for a user. Returns factor status (active/pending/disabled), enrollment details, and device information. Use to check factor readiness before triggering verification. Returns factor status data and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -980,7 +980,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'verify_factor',
-          description: 'Verify an authentication factor using OTP or device ID. Returns verification status and x-request-id.',
+          description: 'Authenticate OTP code for SMS, Email, or Authenticator factors. Requires verification_id from activate_factor call. For SMS/Email: only OTP needed. For Authenticator: OTP + device_id needed. Returns success/error status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1007,7 +1007,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'verify_factor_poll',
-          description: 'Verify an authentication factor using polling. Returns verification status and x-request-id.',
+          description: 'Poll for verification status of push-based factors (OneLogin Protect). Use after triggering verification. Poll periodically until status changes to approved/denied. Returns verification status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1026,7 +1026,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'trigger_factor_verification',
-          description: 'Trigger authentication factor verification (sends push notification). Returns trigger status and x-request-id.',
+          description: 'Trigger authentication factor verification by sending push notification to OneLogin Protect device. User approves/denies on their device. Use verify_factor_poll to check for user response. Returns trigger status and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1045,7 +1045,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'remove_factor',
-          description: 'Remove an authentication factor from a user. Returns success status and x-request-id.',
+          description: 'Remove an enrolled MFA factor from a user. Requires device_id from enrollment or get enrolled factors call. Returns 204 No Content on success and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1064,7 +1064,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'generate_mfa_token',
-          description: 'Generate an MFA token for a user. Returns MFA token data and x-request-id.',
+          description: 'Generate a temporary MFA token for account recovery when MFA device has been lost. Token expires_in defaults to 259200 seconds (72 hours max). reusable flag defaults to false (single use). Returns mfa_token, expires_at, reusable flag, device_id, and x-request-id.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1088,7 +1088,7 @@ class OneLoginMcpServer {
         // SAML Assertions tools
         {
           name: 'generate_saml_assertion',
-          description: 'Generate a SAML assertion for a user. Returns SAML assertion data and x-request-id for log tracing.',
+          description: 'Generate a SAML assertion for user authentication to an app. If MFA is not required: returns SAML assertion data immediately. If MFA is required: returns state_token, devices (with device_id for each factor), callback_url, and user info - must then call verify_saml_assertion_factor. Works with ip_address parameter to honor MFA IP allow-listing. Returns assertion data or MFA challenge and x-request-id (API v2).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1119,7 +1119,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'verify_saml_assertion_factor',
-          description: 'Verify a SAML assertion factor using MFA. Returns verification data and x-request-id for log tracing.',
+          description: 'Verify OTP for second factor when MFA is required for SAML authentication. Use in conjunction with generate_saml_assertion. For some factors (SMS): OTP not immediately required, returns pending status. For others (Google Authenticator): OTP required immediately. For OneLogin Protect: first call triggers push notification, subsequent calls poll with do_not_notify=true to check status. Returns SAML assertion on success or error and x-request-id (API v2).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1151,7 +1151,7 @@ class OneLoginMcpServer {
         // Invite Links tools (API v1)
         {
           name: 'generate_invite_link',
-          description: 'Generate an invite link for a user (API v1 - Rate Limited). Returns invite link data and x-request-id.',
+          description: 'Generate a password reset invite link for an existing user in OneLogin. Returns the link URL but does NOT send any email - use send_invite_link to email it. Provide link to user to enable them to set password and access OneLogin portal. Email parameter is case-sensitive. Returns invite link and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1181,7 +1181,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'send_invite_link',
-          description: 'Send an invite link to a user via email (API v1 - Rate Limited). Returns send status and x-request-id.',
+          description: 'Send a password reset invite link email to an existing user in OneLogin. User clicks link to set password and access OneLogin portal. Email parameter is case-sensitive. Use personal_email to send to different address than user\'s OneLogin email. Returns success message with recipient email and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1216,7 +1216,7 @@ class OneLoginMcpServer {
         // Privilege CRUD tools (API v1)
         {
           name: 'get_privilege',
-          description: 'Get a specific privilege by ID (API v1 - Rate Limited). Returns privilege data and x-request-id.',
+          description: 'Return a single privilege by ID. IMPORTANT: Requires Delegated Administration subscription. Returns privilege data with ID, name, description, and policy statement (Version, Statement with Effect/Action/Scope). If privilege not found, returns 404. Returns x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1231,7 +1231,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'create_privilege',
-          description: 'Create a new privilege (API v1 - Rate Limited). Returns created privilege data and x-request-id.',
+          description: 'Create a new privilege object that defines actions on OneLogin resources. IMPORTANT: Privileges don\'t grant user access - they describe what actions can be performed. Assign privilege to user/role to grant access. Requires policy statement with Version="2018-05-18", Statement array with Effect="Allow", Action (e.g., "users:List"), and Scope (e.g., "*" or "apps/1234"). Use wildcard "*" for super user privileges. Don\'t mix classes in Action array. IMPORTANT: Requires Delegated Administration subscription. Returns created privilege ID and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1246,7 +1246,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'update_privilege',
-          description: 'Update an existing privilege (API v1 - Rate Limited). Returns updated privilege data and x-request-id.',
+          description: 'Update an existing privilege definition. IMPORTANT: Requires Delegated Administration subscription. Can update name, description, and policy statement. Returns updated privilege data and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1265,7 +1265,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'delete_privilege',
-          description: 'Delete a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          description: 'Delete a privilege. IMPORTANT: Requires Delegated Administration subscription. This removes the privilege definition and unassigns it from all users/roles. Returns success status and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1280,7 +1280,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_privilege_roles',
-          description: 'Get roles assigned to a privilege (API v1 - Rate Limited). Returns role list and x-request-id for log tracing.',
+          description: 'Get list of roles that have been assigned to a specific privilege. IMPORTANT: Requires Delegated Administration subscription. Returns role list with IDs and names and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1295,7 +1295,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'assign_role_to_privilege',
-          description: 'Assign a role to a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          description: 'Assign a role to a privilege, granting the role\'s users the privilege\'s defined actions. IMPORTANT: Requires Delegated Administration subscription. Returns success status and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1314,7 +1314,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'remove_role_from_privilege',
-          description: 'Remove a role from a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          description: 'Remove a role assignment from a privilege, revoking the privilege\'s actions from the role\'s users. IMPORTANT: Requires Delegated Administration subscription. Returns success status and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1333,7 +1333,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'get_privilege_users',
-          description: 'Get users assigned to a privilege (API v1 - Rate Limited). Returns user list and x-request-id for log tracing.',
+          description: 'Get list of users that have been directly assigned to a specific privilege. IMPORTANT: Requires Delegated Administration subscription. Returns user list with IDs and names and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1348,7 +1348,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'assign_users_to_privilege',
-          description: 'Assign users to a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          description: 'Assign users directly to a privilege, granting them the privilege\'s defined actions. IMPORTANT: Requires Delegated Administration subscription. Returns success status and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -1367,7 +1367,7 @@ class OneLoginMcpServer {
         },
         {
           name: 'remove_user_from_privilege',
-          description: 'Remove a user from a privilege (API v1 - Rate Limited). Returns success status and x-request-id.',
+          description: 'Remove a user assignment from a privilege, revoking the privilege\'s actions from the user. IMPORTANT: Requires Delegated Administration subscription. Returns success status and x-request-id (API v1 - Rate Limited).',
           inputSchema: {
             type: 'object',
             properties: {
