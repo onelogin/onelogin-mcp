@@ -23,7 +23,7 @@ jobs:
 
       - name: Setup npm authentication
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_FOR_PUBLISHING }}" > ~/.npmrc
           echo "@onelogin:registry=https://registry.npmjs.org/" >> ~/.npmrc
 
       - name: Publish to npm
