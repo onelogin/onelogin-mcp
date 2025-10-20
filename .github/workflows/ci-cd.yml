@@ -1,0 +1,31 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+env:
+  SECRETS: ${{ toJson(secrets) }}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan
+        uses: onelogin/.github-private/platform/actions/scan/v2@master
+
+  test:
+    runs-on: ubuntu-latest
+    needs: scan
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - name: Test
+        uses: onelogin/.github-private/platform/actions/test/v3@master
+
+      - name: Summarize
+        uses: onelogin/.github-private/platform/actions/summarize/v2@master

@@ -1,13 +1,42 @@
 {
-  "name": "onelogin-mcp",
+  "name": "@onelogin/onelogin-mcp",
   "version": "1.0.0",
-  "description": "OneLogin MCP Server",
+  "description": "Model Context Protocol server for OneLogin API - enables Claude and other MCP clients to manage users, apps, roles, and authentication",
+  "main": "index.js",
   "module": "index.js",
   "type": "module",
-  "private": true,
+  "files": [
+    "index.js",
+    "setup.js",
+    "lib/**/*.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "onelogin-mcp": "index.js",
+    "onelogin-mcp-setup": "setup.js"
+  },
   "scripts": {
     "setup": "bun run setup.js",
     "start": "bun run index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onelogin/onelogin-mcp.git"
+  },
+  "keywords": [
+    "onelogin",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "identity",
+    "authentication",
+    "api"
+  ],
+  "author": "OneLogin",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@types/bun": "latest"
