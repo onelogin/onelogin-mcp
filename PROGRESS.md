@@ -9,7 +9,7 @@
 - ✅ OAuth2 authentication client with token caching
 - ✅ MCP server connected to Claude Code
 - ✅ **65 tools** across all OneLogin resource types
-- ✅ **Enhanced tool descriptions** (47/65 with rich contextual information)
+- ✅ **Enhanced tool descriptions** (65/65 with rich contextual information)
 - ✅ **CONTRIBUTING.md** with quality guidelines for future tools
 - ✅ **Consumer-ready README** with installation and usage instructions
 - ✅ Comprehensive filtering (wildcards, time-based, custom fields)
