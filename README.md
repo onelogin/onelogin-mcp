@@ -19,28 +19,24 @@ All tools include comprehensive descriptions with warnings, best practices, and 
 
 ### Prerequisites
 
-- [Bun runtime](https://bun.sh)
 - OneLogin API credentials (OAuth2 client ID and secret)
 - [Claude Desktop](https://claude.ai/download)
 
 ### Setup
 
-1. Clone and install dependencies:
+1. Install the package:
 
 ```bash
-cd ~/src  # or your preferred directory
-git clone https://github.com/onelogin/onelogin-mcp.git
-cd onelogin-mcp
-bun install
+npm install -g @onelogin/onelogin-mcp
 ```
 
 2. Configure OneLogin credentials:
 
 ```bash
-bun run setup
+npx onelogin-mcp-setup
 ```
 
-You'll need:
+Enter your OneLogin server details when prompted:
 - Server name (e.g., "Production", "Shadow")
 - OneLogin subdomain URL (e.g., `https://mycompany.onelogin.com`)
 - OAuth2 client ID and secret
@@ -49,14 +45,7 @@ Configuration is stored in `~/.config/onelogin-mcp/servers.json`.
 
 3. Add to Claude Desktop config:
 
-Find your installation path:
-
-```bash
-cd onelogin-mcp
-pwd
-```
-
-Edit Claude Desktop config:
+Edit the config file:
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
@@ -66,8 +55,8 @@ Edit Claude Desktop config:
 {
   "mcpServers": {
     "onelogin": {
-      "command": "bun",
-      "args": ["run", "/path/to/onelogin-mcp/index.js"]
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"]
     }
   }
 }
@@ -79,15 +68,15 @@ Edit Claude Desktop config:
 {
   "mcpServers": {
     "onelogin-prod": {
-      "command": "bun",
-      "args": ["run", "/path/to/onelogin-mcp/index.js"],
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
       "env": {
         "ONELOGIN_SERVER": "Production"
       }
     },
     "onelogin-shadow": {
-      "command": "bun",
-      "args": ["run", "/path/to/onelogin-mcp/index.js"],
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
       "env": {
         "ONELOGIN_SERVER": "Shadow"
       }
