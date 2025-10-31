@@ -20,7 +20,7 @@ All tools include comprehensive descriptions with warnings, best practices, and 
 ### Prerequisites
 
 - OneLogin API credentials (OAuth2 client ID and secret)
-- [Claude Desktop](https://claude.ai/download)
+- An AI client such as [Copilot CLI](https://github.com/features/copilot/cli/), [Claude Code](https://www.claude.com/product/claude-code) or [Claude Desktop](https://claude.ai/download)
 
 ### Setup
 
