@@ -291,6 +291,33 @@ Key conventions:
 - All modules export `tools` array and `handlers` object
 - Registry auto-discovers tools from module imports
 
+## Releasing
+
+To publish a new version to npm:
+
+1. **Merge your changes** to the `main` branch
+
+2. **Create a GitHub Release**:
+   - Go to [Releases](https://github.com/onelogin/onelogin-mcp/releases) → "Draft a new release"
+   - Create a new tag with the version (e.g., `v1.1.0`)
+   - Set the release title (e.g., "v1.1.0 - MFA API fixes")
+   - Add release notes describing the changes
+   - Click "Publish release"
+
+3. **Automatic Publishing**: The GitHub Action will:
+   - Extract the version from the release tag (strips `v` prefix)
+   - Update `package.json` with the new version
+   - Publish to npm under `@onelogin/onelogin-mcp`
+
+**Version Format**: Use semantic versioning (`MAJOR.MINOR.PATCH`)
+- `MAJOR`: Breaking API changes
+- `MINOR`: New features, backward compatible
+- `PATCH`: Bug fixes, backward compatible
+
+**Manual Publishing** (if needed):
+- Go to Actions → "Publish Package" → "Run workflow"
+- Optionally specify a version override
+
 ## Support
 
 - [GitHub Issues](https://github.com/onelogin/onelogin-mcp/issues)
