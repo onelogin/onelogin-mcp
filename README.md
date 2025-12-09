@@ -4,7 +4,7 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server providing com
 
 ## Overview
 
-This server provides 177 tools covering the complete OneLogin API surface:
+This server provides 172 tools covering the complete OneLogin API surface:
 
 - **Identity Management**: Users, roles, groups, directories
 - **Applications**: Apps, connectors, SAML, OAuth
@@ -104,10 +104,10 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-All 177 tools are organized into 28 categories:
+All 172 tools are organized into 28 categories:
 
-**Identity & Access** (63 tools)
-- Users (14)
+**Identity & Access** (59 tools)
+- Users (10)
 - Roles (13)
 - Privileges (11)
 - Groups (2)
@@ -248,7 +248,7 @@ onelogin-mcp/
 │   ├── onelogin-api.js         # OAuth2 client with token caching
 │   └── tools/
 │       ├── registry.js         # Tool registry and dispatcher
-│       ├── users.js            # User management (14 tools)
+│       ├── users.js            # User management (10 tools)
 │       ├── roles.js            # Role management (13 tools)
 │       ├── privileges.js       # Privilege management (11 tools)
 │       ├── apps.js             # App management (7 tools)
