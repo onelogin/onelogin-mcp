@@ -4,16 +4,16 @@
 
 ### Implementation Complete
 
-- All 177 OneLogin API tools implemented
+- All 172 OneLogin API tools implemented
 - 28 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 177
+### Tool Count: 172
 
-**Identity & Access** (63 tools)
-- Users: 14 tools
+**Identity & Access** (59 tools)
+- Users: 10 tools
 - Roles: 13 tools
 - Privileges: 11 tools
 - Groups: 2 tools
@@ -79,6 +79,14 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 **MCP config**: Claude Desktop `claude_desktop_config.json`
 
 ### Recent Changes
+
+**Session 9 (2025-12-09): Custom Attributes API Fix**
+- Fixed custom attributes implementation that was confusing schema management with value setting
+- Removed 4 broken tools: get_user_custom_attribute, create_user_custom_attribute, update_user_custom_attribute, delete_user_custom_attribute
+- Fixed list_user_custom_attributes to use correct API v1 endpoint without user_id requirement
+- Updated update_user description to emphasize custom attribute value setting via custom_attributes object
+- Corrected tool counts in documentation (172 tools total, 10 user tools)
+- Tools were incorrectly documented as 177 in v1.0.3, actual count was 176
 
 **Session 8 (2025-10-20): 100% API Coverage Complete**
 - Added 35 new tools across 10 categories (142 → 177 tools)
