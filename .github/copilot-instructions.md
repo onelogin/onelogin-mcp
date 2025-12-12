@@ -42,9 +42,9 @@ export const tools = [
 ];
 
 export const handlers = {
-  tool_name: async (args, api) => {
+  tool_name: async (api, args) => {
     // Implementation using OneLogin API client
-    return await api.get('/path', args);
+    return await api.get('/api/2/path', args);
   }
 };
 ```
@@ -167,16 +167,16 @@ npm start
 ### Common Patterns
 ```javascript
 // GET with query parameters
-await api.get('/users', { email: 'user@example.com' });
+await api.get('/api/2/users', { email: 'user@example.com' });
 
 // POST with body
-await api.post('/users', { firstname: 'John', lastname: 'Doe', email: 'john@example.com' });
+await api.post('/api/2/users', { firstname: 'John', lastname: 'Doe', email: 'john@example.com' });
 
 // PUT for updates
-await api.put('/users/123', { title: 'Senior Engineer' });
+await api.put('/api/2/users/123', { title: 'Senior Engineer' });
 
 // DELETE operations
-await api.delete('/users/123');
+await api.delete('/api/2/users/123');
 ```
 
 ### Response Handling
