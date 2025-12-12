@@ -282,7 +282,7 @@ See `files` array in `package.json`:
 ## Resources
 
 - [OneLogin API Documentation](https://developers.onelogin.com/api-docs)
-- [Model Context Protocol Specification](https://modelcontextprotocol.io)
+- [Model Context Protocol Specification](https://modelcontextprotocol.io/specification/)
 - [Claude Desktop Integration](https://claude.ai/download)
 - [GitHub Repository](https://github.com/onelogin/onelogin-mcp)
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Tool description guidelines
