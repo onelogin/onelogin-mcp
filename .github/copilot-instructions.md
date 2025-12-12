@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a Model Context Protocol (MCP) server that provides comprehensive access to the OneLogin API. It enables Claude Desktop and other MCP clients to manage users, apps, roles, authentication, and security settings through 172 tools covering the complete OneLogin API surface.
+This is a Model Context Protocol (MCP) server that provides comprehensive access to the OneLogin API. It enables Claude Desktop and other MCP clients to manage users, apps, roles, authentication, and security settings through comprehensive tools covering the complete OneLogin API surface.
 
 **Technology Stack:**
 - Runtime: Bun (Node.js compatible)
