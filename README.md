@@ -4,14 +4,14 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server providing com
 
 ## Overview
 
-This server provides 176 tools covering the complete OneLogin API surface:
+This server provides 187 tools covering a comprehensive set of supported OneLogin API endpoints:
 
-- **Identity Management**: Users, roles, groups, directories
+- **Identity Management**: Users, roles, groups
 - **Applications**: Apps, connectors, SAML, OAuth
-- **Authentication**: MFA, sessions, passwords, risk rules
-- **Security**: Trusted devices, identity providers, certificates
-- **Configuration**: Brands, login pages, mappings, policies
-- **Operations**: Events, webhooks, reports, rate limits
+- **Authentication**: MFA, sessions, risk rules
+- **Security**: API authorization
+- **Configuration**: Brands, login pages, mappings
+- **Operations**: Events, reports, rate limits
 
 All tools include comprehensive descriptions with warnings, best practices, and return data specifications.
 
@@ -104,44 +104,37 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-All 172 tools are organized into 28 categories:
+All 187 tools are organized into 7 major categories with 21 subcategories:
 
-**Identity & Access** (59 tools)
-- Users (10)
-- Roles (13)
-- Privileges (11)
-- Groups (2)
-- Directories (6)
-- Mappings (14)
-- Device Trust (5)
+**Identity & Access** (79 tools)
+- Users (30)
+- Roles (16)
+- Privileges (13)
+- Groups (3)
+- Mappings (17)
 
-**Applications** (17 tools)
-- Apps (7)
-- Connectors (3)
-- Embed Apps (5)
-- Certificates (4)
+**Applications** (14 tools)
+- Apps (10)
+- Connectors (4)
 
-**Authentication** (31 tools)
+**Authentication** (26 tools)
 - MFA (11)
 - Sessions (5)
-- Password Policies (4)
 - SAML (2)
 - OAuth Tokens (2)
-- Invite Links (2)
+- Invite Links (6)
 
-**Security** (27 tools)
-- Risk Rules (6)
-- Smart Hooks (8)
-- Trusted IDPs (8)
-- API Authorization (17)
+**Security** (41 tools)
+- Risk Rules (9)
+- Smart Hooks (11)
+- API Authorization (21)
 
-**Customization** (17 tools)
-- Brands (6)
-- Login Pages (5)
+**Customization** (15 tools)
+- Brands (8)
+- Login Pages (7)
 
-**Monitoring** (13 tools)
-- Events (2)
-- Webhooks (6)
+**Monitoring** (8 tools)
+- Events (3)
 - Reports (3)
 - Rate Limits (2)
 
@@ -259,16 +252,9 @@ onelogin-mcp/
 │       ├── api-authorization.js # OAuth scopes (17 tools)
 │       ├── sessions.js         # Session tokens (5 tools)
 │       ├── brands.js           # Branding (6 tools)
-│       ├── trusted-idps.js     # Federation (8 tools)
-│       ├── device-trust.js     # Trusted devices (5 tools)
 │       ├── connectors.js       # App catalog (3 tools)
-│       ├── certificates.js     # SAML certs (4 tools)
-│       ├── directories.js      # AD/LDAP sync (6 tools)
-│       ├── embed-apps.js       # Portal embedding (5 tools)
 │       ├── login-pages.js      # Custom login (5 tools)
-│       ├── password-policies.js # Password rules (4 tools)
 │       ├── reports.js          # Analytics (3 tools)
-│       ├── webhooks.js         # Event notifications (6 tools)
 │       ├── rate-limits.js      # API throttling (2 tools)
 │       ├── account-settings.js # Global config (4 tools)
 │       ├── saml.js             # SAML assertions (2 tools)
