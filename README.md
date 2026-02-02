@@ -104,7 +104,7 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-All 187 tools are organized into 21 categories:
+All 187 tools are organized into 7 major categories with 21 subcategories:
 
 **Identity & Access** (79 tools)
 - Users (30)
