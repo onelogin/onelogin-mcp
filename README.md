@@ -10,7 +10,7 @@ This server provides tools covering a comprehensive set of supported OneLogin AP
 - **Applications**: Apps, connectors, SAML, OAuth
 - **Authentication**: MFA, sessions, risk rules
 - **Security**: API authorization
-- **Configuration**: Brands, login pages, mappings
+- **Configuration**: Brands, mappings
 - **Operations**: Events, reports, rate limits
 
 All tools include comprehensive descriptions with warnings, best practices, and return data specifications.
@@ -106,35 +106,34 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 All 152 tools are organized into 7 major categories with 21 subcategories:
 
-**Identity & Access** (83 tools)
-- Users (30)
-- Roles (16)
-- Privileges (13)
+**Identity & Access** (59 tools)
+- Users (14)
+- Roles (13)
+- Privileges (11)
 - Groups (6)
-- Mappings (18)
+- Mappings (15)
 
 **Applications** (18 tools)
 - Apps (15)
 - Connectors (3)
 
-**Authentication** (26 tools)
-- MFA (11)
+**Authentication** (21 tools)
+- MFA (10)
 - Sessions (5)
 - SAML (2)
 - OAuth Tokens (2)
-- Invite Links (6)
+- Invite Links (2)
 
-**Security** (41 tools)
-- Risk Rules (9)
-- Smart Hooks (11)
-- API Authorization (21)
+**Security** (32 tools)
+- Risk Rules (6)
+- Smart Hooks (9)
+- API Authorization (17)
 
-**Customization** (15 tools)
-- Brands (8)
-- Login Pages (7)
+**Customization** (6 tools)
+- Brands (6)
 
-**Monitoring** (8 tools)
-- Events (3)
+**Monitoring** (7 tools)
+- Events (2)
 - Reports (3)
 - Rate Limits (2)
 
@@ -250,7 +249,6 @@ onelogin-mcp/
 │       ├── sessions.js         # Session tokens (5 tools)
 │       ├── brands.js           # Branding (6 tools)
 │       ├── connectors.js       # App catalog (3 tools)
-│       ├── login-pages.js      # Custom login (5 tools)
 │       ├── reports.js          # Analytics (3 tools)
 │       ├── rate-limits.js      # API throttling (2 tools)
 │       ├── saml.js             # SAML assertions (2 tools)
