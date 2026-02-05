@@ -1,16 +1,16 @@
 # OneLogin MCP Server - Development Progress
 
-## Status: Complete - 100% API Coverage
+## Status: Complete - 100% Public API Coverage
 
 ### Implementation Complete
 
-- All 172 OneLogin API tools implemented
-- 28 tool categories across full API surface
+- All 187 OneLogin API tools implemented
+- 27 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 172
+### Tool Count: 187
 
 **Identity & Access** (59 tools)
 - Users: 10 tools
@@ -46,14 +46,11 @@
 - Login Pages: 5 tools
 - Mappings: 14 tools (counted in Identity & Access)
 
-**Monitoring** (13 tools)
+**Monitoring** (8 tools)
 - Events: 2 tools
 - Webhooks: 6 tools
 - Reports: 3 tools
 - Rate Limits: 2 tools
-
-**Account** (4 tools)
-- Account Settings: 4 tools
 
 ### Architecture
 
@@ -79,6 +76,12 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 **MCP config**: Claude Desktop `claude_desktop_config.json`
 
 ### Recent Changes
+
+**Session 10 (2026-02-05): Removed Account Settings Module**
+- Removed account-settings.js module (4 tools) - no public API available for these endpoints
+- Updated tool count from 191 to 187 tools
+- Removed Account category from documentation
+- Updated tool registry to exclude accountSettingsTools
 
 **Session 9 (2025-12-09): Custom Attributes API Fix**
 - Fixed custom attributes implementation that was confusing schema management with value setting
