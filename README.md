@@ -104,37 +104,36 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-All 139 tools are organized into 7 major categories with 21 subcategories:
+All 139 tools are organized into 7 major categories with 20 subcategories:
 
-**Identity & Access** (83 tools)
-- Users (30)
-- Roles (16)
-- Privileges (13)
+**Identity & Access** (59 tools)
+- Users (14)
+- Roles (13)
+- Privileges (11)
 - Groups (6)
-- Mappings (18)
+- Mappings (15)
 
-**Applications** (14 tools)
-- Apps (10)
-- Connectors (4)
+**Applications** (10 tools)
+- Apps (7)
+- Connectors (3)
 
-**Authentication** (26 tools)
-- MFA (11)
+**Authentication** (21 tools)
+- MFA (10)
 - Sessions (5)
 - SAML (2)
 - OAuth Tokens (2)
-- Invite Links (6)
+- Invite Links (2)
 
-**Security** (41 tools)
-- Risk Rules (9)
-- Smart Hooks (11)
-- API Authorization (21)
+**Security** (32 tools)
+- Risk Rules (6)
+- Smart Hooks (9)
+- API Authorization (17)
 
-**Customization** (15 tools)
-- Brands (8)
-- Login Pages (7)
+**Customization** (6 tools)
+- Brands (6)
 
-**Monitoring** (8 tools)
-- Events (3)
+**Monitoring** (7 tools)
+- Events (2)
 - Reports (3)
 - Rate Limits (2)
 
