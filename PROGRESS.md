@@ -4,13 +4,13 @@
 
 ### Implementation Complete
 
-- All 172 OneLogin API tools implemented
+- All 176 OneLogin API tools implemented
 - 28 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 172
+### Tool Count: 176
 
 **Identity & Access** (59 tools)
 - Users: 10 tools
@@ -35,11 +35,11 @@
 - OAuth Tokens: 2 tools
 - Invite Links: 2 tools
 
-**Security** (27 tools)
+**Security** (31 tools)
 - Risk Rules: 6 tools
 - Smart Hooks: 8 tools
 - Trusted IDPs: 8 tools
-- API Authorization: 17 tools
+- API Authorization: 21 tools
 
 **Customization** (17 tools)
 - Brands: 6 tools
@@ -79,6 +79,13 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 **MCP config**: Claude Desktop `claude_desktop_config.json`
 
 ### Recent Changes
+
+**Session 10 (2026-02-05): API Authorization Bug Fixes**
+- Fixed DELETE method in onelogin-api.js to support optional request body parameter
+- Added 4 missing claims management tools: list_authorization_claims, add_authorization_claim, update_authorization_claim, delete_authorization_claim
+- Claims allow adding user attributes (email, roles, custom fields) to access tokens as JWT claims
+- Total tool count increased from 172 to 176 (API Authorization: 17 → 21 tools)
+- All DELETE endpoints with body payloads now work correctly (scopes, clients, claims, smart hook envs)
 
 **Session 9 (2025-12-09): Custom Attributes API Fix**
 - Fixed custom attributes implementation that was confusing schema management with value setting
