@@ -113,9 +113,9 @@ All 152 tools are organized into 7 major categories with 21 subcategories:
 - Groups (6)
 - Mappings (18)
 
-**Applications** (18 tools)
-- Apps (15)
-- Connectors (3)
+**Applications** (22 tools)
+- Apps (18)
+- Connectors (4)
 
 **Authentication** (26 tools)
 - MFA (11)
