@@ -4,51 +4,43 @@
 
 ### Implementation Complete
 
-- All 187 OneLogin API tools implemented
+- All 140 OneLogin API tools implemented
 - 27 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 187
+### Tool Count: 140
 
-**Identity & Access** (59 tools)
-- Users: 10 tools
+**Identity & Access** (69 tools)
+- Users: 14 tools
 - Roles: 13 tools
 - Privileges: 11 tools
-- Groups: 2 tools
-- Directories: 6 tools
-- Mappings: 14 tools
-- Device Trust: 5 tools
+- Groups: 6 tools
+- Mappings: 15 tools
+- MFA: 10 tools
 
-**Applications** (17 tools)
+**Applications** (10 tools)
 - Apps: 7 tools
 - Connectors: 3 tools
-- Embed Apps: 5 tools
-- Certificates: 4 tools
 
-**Authentication** (31 tools)
-- MFA: 11 tools
+**Authentication** (11 tools)
 - Sessions: 5 tools
-- Password Policies: 4 tools
 - SAML: 2 tools
 - OAuth Tokens: 2 tools
 - Invite Links: 2 tools
 
-**Security** (27 tools)
+**Security** (32 tools)
 - Risk Rules: 6 tools
-- Smart Hooks: 8 tools
-- Trusted IDPs: 8 tools
+- Smart Hooks: 9 tools
 - API Authorization: 17 tools
 
-**Customization** (17 tools)
+**Customization** (11 tools)
 - Brands: 6 tools
 - Login Pages: 5 tools
-- Mappings: 14 tools (counted in Identity & Access)
 
-**Monitoring** (8 tools)
+**Monitoring** (7 tools)
 - Events: 2 tools
-- Webhooks: 6 tools
 - Reports: 3 tools
 - Rate Limits: 2 tools
 
@@ -79,7 +71,9 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 
 **Session 10 (2026-02-05): Removed Account Settings Module**
 - Removed account-settings.js module (4 tools) - no public API available for these endpoints
-- Updated tool count from 191 to 187 tools
+- Corrected tool count documentation from 191 to 140 (actual count)
+- Previous documentation incorrectly stated 172 or 191 tools
+- Actual tool count was 144 before removal, now 140 tools
 - Removed Account category from documentation
 - Updated tool registry to exclude accountSettingsTools
 

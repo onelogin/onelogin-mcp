@@ -4,7 +4,7 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server providing com
 
 ## Overview
 
-This server provides 187 tools covering a comprehensive set of supported OneLogin API endpoints:
+This server provides 140 tools covering a comprehensive set of supported OneLogin API endpoints:
 
 - **Identity Management**: Users, roles, groups
 - **Applications**: Apps, connectors, SAML, OAuth
