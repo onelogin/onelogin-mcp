@@ -219,7 +219,7 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-All 152 tools are organized into 7 major categories with 21 subcategories:
+This server provides 148 tools organized into 6 major categories:
 
 **Identity & Access** (59 tools)
 - Users (14)
@@ -239,10 +239,10 @@ All 152 tools are organized into 7 major categories with 21 subcategories:
 - OAuth Tokens (2)
 - Invite Links (2)
 
-**Security** (32 tools)
+**Security** (37 tools)
 - Risk Rules (6)
-- Smart Hooks (9)
-- API Authorization (17)
+- Smart Hooks (10)
+- API Authorization (21)
 
 **Customization** (6 tools)
 - Brands (6)
