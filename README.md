@@ -24,6 +24,70 @@ All tools include comprehensive descriptions with warnings, best practices, and 
 
 ### Setup
 
+#### Option 1: Environment Variables (Recommended)
+
+Configure credentials directly in Claude Desktop config - no separate setup required.
+
+Edit the config file:
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**Single environment:**
+
+```json
+{
+  "mcpServers": {
+    "onelogin": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://mycompany.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "your_client_id",
+        "ONELOGIN_CLIENT_SECRET": "your_client_secret"
+      }
+    }
+  }
+}
+```
+
+**Multiple environments** (production/test separation):
+
+```json
+{
+  "mcpServers": {
+    "onelogin-prod": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "prod_client_id",
+        "ONELOGIN_CLIENT_SECRET": "prod_secret"
+      }
+    },
+    "onelogin-shadow": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
+        "ONELOGIN_CLIENT_ID": "shadow_client_id",
+        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
+      }
+    }
+  }
+}
+```
+
+**Optional environment variables:**
+- `ONELOGIN_USE_PREPROD`: Set to `"true"` for preprod environments
+- `ONELOGIN_LEGACY_KEY`: Legacy API key (rarely needed)
+- `ONELOGIN_SERVER`: Server name for logging (defaults to "default")
+
+Restart Claude Desktop completely after configuration.
+
+#### Option 2: Setup Script (servers.json)
+
+Alternative method using a configuration file:
+
 1. Install the package:
 
 ```bash
@@ -62,7 +126,7 @@ Edit the config file:
 }
 ```
 
-**Multiple environments** (recommended for production/test separation):
+**Multiple environments** (reference servers by name):
 
 ```json
 {
@@ -139,9 +203,41 @@ All 152 tools are organized into 7 major categories with 21 subcategories:
 
 ## Configuration
 
+### Credential Management
+
+The server supports two configuration methods:
+
+1. **Environment Variables** (recommended): Set `ONELOGIN_URL`, `ONELOGIN_CLIENT_ID`, and `ONELOGIN_CLIENT_SECRET` in Claude Desktop config
+2. **Configuration File**: Use `npx onelogin-mcp-setup` to store credentials in `~/.config/onelogin-mcp/servers.json`
+
+Environment variables take precedence over the configuration file.
+
 ### Multiple OneLogin Instances
 
-Configure multiple servers in `~/.config/onelogin-mcp/servers.json`:
+**Using environment variables** (see Setup Option 1 above for full example):
+
+```json
+{
+  "mcpServers": {
+    "onelogin-prod": {
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "prod_id",
+        "ONELOGIN_CLIENT_SECRET": "prod_secret"
+      }
+    },
+    "onelogin-shadow": {
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
+        "ONELOGIN_CLIENT_ID": "shadow_id",
+        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
+      }
+    }
+  }
+}
+```
+
+**Using servers.json** (configure with `npx onelogin-mcp-setup`):
 
 ```json
 {
@@ -158,9 +254,24 @@ Configure multiple servers in `~/.config/onelogin-mcp/servers.json`:
 }
 ```
 
+Then reference by name in Claude config using `ONELOGIN_SERVER` env var (see Setup Option 2).
+
 ### Preprod Environment
 
-For OneLogin preprod environments, add `use_preprod: true`:
+**Using environment variables:**
+
+```json
+{
+  "env": {
+    "ONELOGIN_URL": "https://preprod.onelogin.com",
+    "ONELOGIN_CLIENT_ID": "preprod_id",
+    "ONELOGIN_CLIENT_SECRET": "preprod_secret",
+    "ONELOGIN_USE_PREPROD": "true"
+  }
+}
+```
+
+**Using servers.json:**
 
 ```json
 {
@@ -218,13 +329,16 @@ curl -fsSL https://bun.sh/install | bash
 
 ### Authentication errors
 
-1. Verify credentials in `~/.config/onelogin-mcp/servers.json`
-2. Ensure OAuth2 client has API permissions in OneLogin admin panel
-3. Check client_id and client_secret are for API v2
+1. If using environment variables: Verify `ONELOGIN_URL`, `ONELOGIN_CLIENT_ID`, and `ONELOGIN_CLIENT_SECRET` in Claude Desktop config
+2. If using servers.json: Verify credentials in `~/.config/onelogin-mcp/servers.json`
+3. Ensure OAuth2 client has API permissions in OneLogin admin panel
+4. Check client_id and client_secret are for API v2
 
 ### Wrong environment
 
-Check the `ONELOGIN_SERVER` environment variable in Claude Desktop config matches a server name in `servers.json`.
+**Using environment variables**: Each MCP server entry has its own credentials - verify you're talking to the correct server instance in Claude.
+
+**Using servers.json**: Check the `ONELOGIN_SERVER` environment variable in Claude Desktop config matches a server name in `servers.json`.
 
 ## Project Structure
 
