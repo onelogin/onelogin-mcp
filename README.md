@@ -64,13 +64,13 @@ Edit the config file:
         "ONELOGIN_CLIENT_SECRET": "prod_secret"
       }
     },
-    "onelogin-shadow": {
+    "onelogin-test": {
       "command": "npx",
       "args": ["-y", "@onelogin/onelogin-mcp"],
       "env": {
-        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
-        "ONELOGIN_CLIENT_ID": "shadow_client_id",
-        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
+        "ONELOGIN_URL": "https://company-test.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "test_client_id",
+        "ONELOGIN_CLIENT_SECRET": "test_secret"
       }
     }
   }
@@ -120,13 +120,13 @@ For [OpenCode](https://opencode.ai) users, add to `~/.config/opencode/mcp.json`:
         "ONELOGIN_CLIENT_SECRET": "prod_secret"
       }
     },
-    "onelogin-shadow": {
+    "onelogin-test": {
       "command": "npx",
       "args": ["-y", "@onelogin/onelogin-mcp"],
       "env": {
-        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
-        "ONELOGIN_CLIENT_ID": "shadow_client_id",
-        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
+        "ONELOGIN_URL": "https://company-test.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "test_client_id",
+        "ONELOGIN_CLIENT_SECRET": "test_secret"
       }
     }
   }
@@ -152,7 +152,7 @@ npx onelogin-mcp-setup
 ```
 
 Enter your OneLogin server details when prompted:
-- Server name (e.g., "Production", "Shadow")
+- Server name (e.g., "Production", "Test")
 - OneLogin subdomain URL (e.g., `https://mycompany.onelogin.com`)
 - OAuth2 client ID and secret
 
@@ -189,11 +189,11 @@ Edit the config file:
         "ONELOGIN_SERVER": "Production"
       }
     },
-    "onelogin-shadow": {
+    "onelogin-test": {
       "command": "npx",
       "args": ["-y", "@onelogin/onelogin-mcp"],
       "env": {
-        "ONELOGIN_SERVER": "Shadow"
+        "ONELOGIN_SERVER": "Test"
       }
     }
   }
