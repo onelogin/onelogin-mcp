@@ -1,6 +1,6 @@
 # OneLogin MCP Server
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server providing comprehensive access to the OneLogin API. Enables Claude Desktop and other MCP clients to manage users, apps, roles, authentication, and security settings.
+A [Model Context Protocol](https://modelcontextprotocol.io) server providing comprehensive access to the OneLogin API. Enables Claude Desktop, OpenCode, and other MCP clients to manage users, apps, roles, authentication, and security settings.
 
 ## Overview
 
@@ -20,7 +20,7 @@ All tools include comprehensive descriptions with warnings, best practices, and 
 ### Prerequisites
 
 - OneLogin API credentials (OAuth2 client ID and secret)
-- An AI client such as [Copilot CLI](https://github.com/features/copilot/cli/), [Claude Code](https://www.claude.com/product/claude-code) or [Claude Desktop](https://claude.ai/download)
+- An AI client such as [OpenCode](https://opencode.ai), [Claude Desktop](https://claude.ai/download), [Copilot CLI](https://github.com/features/copilot/cli/), or [Claude Code](https://www.claude.com/product/claude-code)
 
 ### Setup
 
@@ -83,6 +83,57 @@ Edit the config file:
 - `ONELOGIN_SERVER`: Server name for logging (defaults to "default")
 
 Restart Claude Desktop completely after configuration.
+
+#### OpenCode Configuration
+
+For [OpenCode](https://opencode.ai) users, add to `~/.config/opencode/mcp.json`:
+
+**Single environment:**
+
+```json
+{
+  "mcpServers": {
+    "onelogin": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://mycompany.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "your_client_id",
+        "ONELOGIN_CLIENT_SECRET": "your_client_secret"
+      }
+    }
+  }
+}
+```
+
+**Multiple environments:**
+
+```json
+{
+  "mcpServers": {
+    "onelogin-prod": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin.com",
+        "ONELOGIN_CLIENT_ID": "prod_client_id",
+        "ONELOGIN_CLIENT_SECRET": "prod_secret"
+      }
+    },
+    "onelogin-shadow": {
+      "command": "npx",
+      "args": ["-y", "@onelogin/onelogin-mcp"],
+      "env": {
+        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
+        "ONELOGIN_CLIENT_ID": "shadow_client_id",
+        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
+      }
+    }
+  }
+}
+```
+
+Restart OpenCode after configuration.
 
 #### Option 2: Setup Script (servers.json)
 
