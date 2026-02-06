@@ -258,82 +258,16 @@ This server provides 148 tools organized into 6 major categories:
 
 The server supports two configuration methods:
 
-1. **Environment Variables** (recommended): Set `ONELOGIN_URL`, `ONELOGIN_CLIENT_ID`, and `ONELOGIN_CLIENT_SECRET` in Claude Desktop config
+1. **Environment Variables** (recommended): Set `ONELOGIN_URL`, `ONELOGIN_CLIENT_ID`, and `ONELOGIN_CLIENT_SECRET` in your MCP client config (see Installation above)
 2. **Configuration File**: Use `npx onelogin-mcp-setup` to store credentials in `~/.config/onelogin-mcp/servers.json`
 
-Environment variables take precedence over the configuration file.
+Environment variables take precedence over the configuration file. See the Installation section above for complete configuration examples.
 
-### Multiple OneLogin Instances
+### Optional Environment Variables
 
-**Using environment variables** (see Setup Option 1 above for full example):
-
-```json
-{
-  "mcpServers": {
-    "onelogin-prod": {
-      "env": {
-        "ONELOGIN_URL": "https://company.onelogin.com",
-        "ONELOGIN_CLIENT_ID": "prod_id",
-        "ONELOGIN_CLIENT_SECRET": "prod_secret"
-      }
-    },
-    "onelogin-shadow": {
-      "env": {
-        "ONELOGIN_URL": "https://company.onelogin-shadow01.com",
-        "ONELOGIN_CLIENT_ID": "shadow_id",
-        "ONELOGIN_CLIENT_SECRET": "shadow_secret"
-      }
-    }
-  }
-}
-```
-
-**Using servers.json** (configure with `npx onelogin-mcp-setup`):
-
-```json
-{
-  "Production": {
-    "url": "https://company.onelogin.com",
-    "client_id": "prod_client_id",
-    "client_secret": "prod_secret"
-  },
-  "Shadow": {
-    "url": "https://company.onelogin-shadow01.com",
-    "client_id": "shadow_client_id",
-    "client_secret": "shadow_secret"
-  }
-}
-```
-
-Then reference by name in Claude config using `ONELOGIN_SERVER` env var (see Setup Option 2).
-
-### Preprod Environment
-
-**Using environment variables:**
-
-```json
-{
-  "env": {
-    "ONELOGIN_URL": "https://preprod.onelogin.com",
-    "ONELOGIN_CLIENT_ID": "preprod_id",
-    "ONELOGIN_CLIENT_SECRET": "preprod_secret",
-    "ONELOGIN_USE_PREPROD": "true"
-  }
-}
-```
-
-**Using servers.json:**
-
-```json
-{
-  "Preprod": {
-    "url": "https://preprod.onelogin.com",
-    "client_id": "preprod_client_id",
-    "client_secret": "preprod_secret",
-    "use_preprod": true
-  }
-}
-```
+- `ONELOGIN_USE_PREPROD`: Set to `"true"` for preprod environments
+- `ONELOGIN_LEGACY_KEY`: Legacy API key (rarely needed)
+- `ONELOGIN_SERVER`: Server name for logging (defaults to "default") or to select a named server from servers.json
 
 ## Response Format
 
