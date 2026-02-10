@@ -1,6 +1,7 @@
 {
   "name": "@onelogin/onelogin-mcp",
   "version": "1.0.0",
+  "mcpName": "io.github.onelogin/onelogin-mcp",
   "description": "Model Context Protocol server for OneLogin API - enables Claude and other MCP clients to manage users, apps, roles, and authentication",
   "main": "index.js",
   "module": "index.js",

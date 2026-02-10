@@ -73,3 +73,25 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FOR_PUBLISHING }}
+
+      - name: Update server.json version
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          node -e "
+            const fs = require('fs');
+            const srv = JSON.parse(fs.readFileSync('server.json', 'utf8'));
+            srv.version = '$VERSION';
+            srv.packages[0].version = '$VERSION';
+            fs.writeFileSync('server.json', JSON.stringify(srv, null, 2) + '\n');
+          "
+          echo "Updated server.json to version $VERSION"
+
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          sudo mv mcp-publisher /usr/local/bin/
+
+      - name: Publish to MCP Registry
+        run: |
+          mcp-publisher login github-oidc
+          mcp-publisher publish
