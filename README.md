@@ -17,7 +17,7 @@ All tools include comprehensive descriptions with warnings, best practices, and 
 
 ## Demo
 
-<video src="https://github.com/onelogin/onelogin-mcp/raw/main/demo.mp4" controls width="100%"></video>
+https://github.com/user-attachments/assets/512abc44-6bb4-42e4-bb47-c0bc16f29beb
 
 ## Installation
 
