@@ -15,6 +15,10 @@ This server provides tools covering a comprehensive set of supported OneLogin AP
 
 All tools include comprehensive descriptions with warnings, best practices, and return data specifications.
 
+## Demo
+
+https://github.com/onelogin/onelogin-mcp/raw/main/demo.mp4
+
 ## Installation
 
 ### Prerequisites
