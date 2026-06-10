@@ -1,4 +1,6 @@
 # OneLogin MCP Server
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fonelogin%2Fonelogin-mcp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fonelogin%2Fonelogin-mcp?ref=badge_shield)
+
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server providing comprehensive access to the OneLogin API. Enables Claude Desktop, OpenCode, and other MCP clients to manage users, apps, roles, authentication, and security settings.
 
@@ -410,3 +412,6 @@ To publish a new version to npm:
 ## License
 
 MIT
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fonelogin%2Fonelogin-mcp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fonelogin%2Fonelogin-mcp?ref=badge_large)
