@@ -245,7 +245,7 @@ This server provides 148 tools organized into 6 major categories:
 
 **Security** (37 tools)
 - Risk Rules (6)
-- Smart Hooks (10)
+- Smart Hooks (11)
 - API Authorization (21)
 
 **Customization** (6 tools)
@@ -346,7 +346,7 @@ onelogin-mcp/
 │       ├── apps.js             # App management (7 tools)
 │       ├── mfa.js              # MFA management (11 tools)
 │       ├── mappings.js         # User mappings (14 tools)
-│       ├── smart-hooks.js      # Smart Hooks (8 tools)
+│       ├── smart-hooks.js      # Smart Hooks (11 tools)
 │       ├── risk-rules.js       # Risk rules (6 tools)
 │       ├── api-authorization.js # OAuth scopes (17 tools)
 │       ├── sessions.js         # Session tokens (5 tools)
