@@ -223,7 +223,7 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-This server provides 148 tools organized into 6 major categories:
+This server provides 155 tools organized into 7 major categories:
 
 **Identity & Access** (59 tools)
 - Users (14)
@@ -243,10 +243,11 @@ This server provides 148 tools organized into 6 major categories:
 - OAuth Tokens (2)
 - Invite Links (2)
 
-**Security** (37 tools)
+**Security** (40 tools)
+- Policies (7)
 - Risk Rules (6)
 - Smart Hooks (11)
-- API Authorization (21)
+- API Authorization (16)
 
 **Customization** (6 tools)
 - Brands (6)
@@ -255,6 +256,9 @@ This server provides 148 tools organized into 6 major categories:
 - Events (2)
 - Reports (3)
 - Rate Limits (2)
+
+**Account Management** (4 tools)
+- Accounts (4)
 
 ## Configuration
 
@@ -340,15 +344,16 @@ onelogin-mcp/
 │   ├── onelogin-api.js         # OAuth2 client with token caching
 │   └── tools/
 │       ├── registry.js         # Tool registry and dispatcher
-│       ├── users.js            # User management (10 tools)
+│       ├── users.js            # User management (14 tools)
 │       ├── roles.js            # Role management (13 tools)
 │       ├── privileges.js       # Privilege management (11 tools)
-│       ├── apps.js             # App management (7 tools)
-│       ├── mfa.js              # MFA management (11 tools)
-│       ├── mappings.js         # User mappings (14 tools)
+│       ├── apps.js             # App management (15 tools)
+│       ├── mfa.js              # MFA management (10 tools)
+│       ├── mappings.js         # User mappings (15 tools)
 │       ├── smart-hooks.js      # Smart Hooks (11 tools)
+│       ├── policies.js         # Security policies (7 tools)
 │       ├── risk-rules.js       # Risk rules (6 tools)
-│       ├── api-authorization.js # OAuth scopes (17 tools)
+│       ├── api-authorization.js # OAuth scopes (16 tools)
 │       ├── sessions.js         # Session tokens (5 tools)
 │       ├── brands.js           # Branding (6 tools)
 │       ├── connectors.js       # App catalog (3 tools)
@@ -358,7 +363,8 @@ onelogin-mcp/
 │       ├── invite-links.js     # Password resets (2 tools)
 │       ├── oauth-tokens.js     # OAuth tokens (2 tools)
 │       ├── events.js           # Audit logs (2 tools)
-│       └── groups.js           # User groups (6 tools)
+│       ├── groups.js           # User groups (6 tools)
+│       └── accounts.js         # Child accounts (4 tools)
 ├── package.json
 ├── CONTRIBUTING.md
 ├── PROGRESS.md
