@@ -10,39 +10,42 @@
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 142
+### Tool Count: 157
 
-**Identity & Access** (69 tools)
+**Identity & Access** (59 tools)
 - Users: 14 tools
 - Roles: 13 tools
 - Privileges: 11 tools
 - Groups: 6 tools
 - Mappings: 15 tools
-- MFA: 10 tools
 
-**Applications** (10 tools)
-- Apps: 7 tools
+**Applications** (18 tools)
+- Apps: 15 tools
 - Connectors: 3 tools
 
-**Authentication** (11 tools)
+**Authentication** (21 tools)
+- MFA: 10 tools
 - Sessions: 5 tools
 - SAML: 2 tools
 - OAuth Tokens: 2 tools
 - Invite Links: 2 tools
 
-**Security** (32 tools)
+**Security** (40 tools)
+- Policies: 7 tools
 - Risk Rules: 6 tools
-- Smart Hooks: 9 tools
-- API Authorization: 17 tools
+- Smart Hooks: 11 tools
+- API Authorization: 16 tools
 
-**Customization** (11 tools)
+**Customization** (6 tools)
 - Brands: 6 tools
-- Login Pages: 5 tools
 
 **Monitoring** (9 tools)
 - Events: 2 tools
 - Reports: 5 tools
 - Rate Limits: 2 tools
+
+**Account Management** (4 tools)
+- Accounts: 4 tools
 
 ### Architecture
 
