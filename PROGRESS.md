@@ -4,13 +4,13 @@
 
 ### Implementation Complete
 
-- All 157 OneLogin API tools implemented
+- All 156 OneLogin API tools implemented
 - 27 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 157
+### Tool Count: 156
 
 **Identity & Access** (59 tools)
 - Users: 14 tools
@@ -19,9 +19,9 @@
 - Groups: 6 tools
 - Mappings: 15 tools
 
-**Applications** (18 tools)
+**Applications** (17 tools)
 - Apps: 15 tools
-- Connectors: 3 tools
+- Connectors: 2 tools
 
 **Authentication** (21 tools)
 - MFA: 10 tools
@@ -77,6 +77,14 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 - list_mappings no longer forwards `page` / `limit` / `after_cursor` / `before_cursor` / `has_conditions`; `/api/2/mappings` rejects all of them with 422 and returns the full list in one response
 - list_mappings now exposes the filters the API actually accepts: `enabled`, `has_condition`, `has_condition_type`, `has_action`, `has_action_type`
 - Deprecated params stay in the schema (marked DEPRECATED, ignored) so existing callers do not fail schema validation
+- Audited every other list tool's page/limit/cursor params against the live API and added `lib/pagination.js`:
+  - `/api/2` list endpoints paginate with limit/page and follow cursors via a single `cursor` query param; there are no `after_cursor` / `before_cursor` request params (users, apps, roles, connectors reject them with 400; groups, api_authorizations, hooks silently ignore them). list_apps, list_users, list_roles, list_connectors, list_groups, list_api_authorizations, list_smart_hooks, get_smart_hook_logs now expose `cursor`; the old after_cursor/before_cursor args are kept as aliases for it
+  - Cursor header values are URL-encoded; they are now decoded when surfaced in `pagination` and again before being sent, since forwarding them verbatim double-encodes them (Smart Hooks then 422s)
+  - A cursor is always sent alone: `/api/2/roles` rejects cursor + limit/page/sort
+  - list_brands, list_accounts, list_privileges, list_risk_rules: the API ignores every pagination param and returns everything in one response; the params are now marked DEPRECATED and not forwarded
+  - list_events (v1): `page` is rejected by the API (400) and is no longer forwarded; limit + after_cursor / before_cursor from the response body remain the real pagination
+  - Not verifiable with the available tenants: list_policies (401 on both)
+- Removed search_connectors (phantom tool): `/api/2/connectors/search` is not a documented endpoint and responds exactly like an unknown route on both tenants (401 on prod, HTML 400 on Development). The real catalog search is `list_connectors` with a `name` filter, which supports `*wildcards*`. Tool count 157 → 156, Connectors 3 → 2
 
 **Session 10 (2026-02-05): Removed Account Settings Module**
 - Removed account-settings.js module (4 tools) - no public API available for these endpoints
