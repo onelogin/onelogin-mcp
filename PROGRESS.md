@@ -10,7 +10,7 @@
 - Production-ready MCP server with multi-environment support
 - Complete documentation and contribution guidelines
 
-### Tool Count: 140
+### Tool Count: 142
 
 **Identity & Access** (69 tools)
 - Users: 14 tools
@@ -39,9 +39,9 @@
 - Brands: 6 tools
 - Login Pages: 5 tools
 
-**Monitoring** (8 tools)
+**Monitoring** (9 tools)
 - Events: 2 tools
-- Reports: 4 tools
+- Reports: 5 tools
 - Rate Limits: 2 tools
 
 ### Architecture
@@ -96,7 +96,7 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
   - Connectors (3 tools): App catalog browsing
   - Certificates (4 tools): SAML certificate management
   - Password Policies (4 tools): Password security rules
-  - Reports (4 tools): Usage analytics
+  - Reports (5 tools): Usage analytics
   - Webhooks (6 tools): Real-time event notifications
   - Rate Limits (2 tools): API throttling info
   - Account Settings (4 tools): Global configuration
