@@ -39,9 +39,9 @@
 - Brands: 6 tools
 - Login Pages: 5 tools
 
-**Monitoring** (7 tools)
+**Monitoring** (8 tools)
 - Events: 2 tools
-- Reports: 3 tools
+- Reports: 4 tools
 - Rate Limits: 2 tools
 
 ### Architecture
@@ -96,7 +96,7 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
   - Connectors (3 tools): App catalog browsing
   - Certificates (4 tools): SAML certificate management
   - Password Policies (4 tools): Password security rules
-  - Reports (3 tools): Usage analytics
+  - Reports (4 tools): Usage analytics
   - Webhooks (6 tools): Real-time event notifications
   - Rate Limits (2 tools): API throttling info
   - Account Settings (4 tools): Global configuration
