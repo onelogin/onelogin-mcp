@@ -4,7 +4,7 @@
 
 ### Implementation Complete
 
-- All 140 OneLogin API tools implemented
+- All 157 OneLogin API tools implemented
 - 27 tool categories across full API surface
 - Comprehensive tool descriptions with warnings and best practices
 - Production-ready MCP server with multi-environment support
