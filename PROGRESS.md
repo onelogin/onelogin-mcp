@@ -72,6 +72,12 @@ All tools return structured responses with `x-request-id` for Datadog tracing.
 
 ### Recent Changes
 
+**Session 11 (2026-09-14): Fix v2 request shapes (GitHub issues #53, #54)**
+- set_role_apps and add_role_admins now send a bare JSON array to `/api/2/roles/{id}/apps` and `/api/2/roles/{id}/admins`; the v1-style `{*_id_array: [...]}` envelope was rejected with 400 "Expected array in request"
+- list_mappings no longer forwards `page` / `limit` / `after_cursor` / `before_cursor` / `has_conditions`; `/api/2/mappings` rejects all of them with 422 and returns the full list in one response
+- list_mappings now exposes the filters the API actually accepts: `enabled`, `has_condition`, `has_condition_type`, `has_action`, `has_action_type`
+- Deprecated params stay in the schema (marked DEPRECATED, ignored) so existing callers do not fail schema validation
+
 **Session 10 (2026-02-05): Removed Account Settings Module**
 - Removed account-settings.js module (4 tools) - no public API available for these endpoints
 - Corrected tool count documentation from 191 to 140 (actual count)
