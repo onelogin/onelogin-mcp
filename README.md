@@ -223,7 +223,7 @@ Claude will select the appropriate tool, call the OneLogin API, and present resu
 
 ## API Coverage
 
-This server provides 155 tools organized into 7 major categories:
+This server provides 157 tools organized into 7 major categories:
 
 **Identity & Access** (59 tools)
 - Users (14)
@@ -252,9 +252,9 @@ This server provides 155 tools organized into 7 major categories:
 **Customization** (6 tools)
 - Brands (6)
 
-**Monitoring** (7 tools)
+**Monitoring** (9 tools)
 - Events (2)
-- Reports (3)
+- Reports (5)
 - Rate Limits (2)
 
 **Account Management** (4 tools)
@@ -357,7 +357,7 @@ onelogin-mcp/
 │       ├── sessions.js         # Session tokens (5 tools)
 │       ├── brands.js           # Branding (6 tools)
 │       ├── connectors.js       # App catalog (3 tools)
-│       ├── reports.js          # Analytics (3 tools)
+│       ├── reports.js          # Analytics (5 tools)
 │       ├── rate-limits.js      # API throttling (2 tools)
 │       ├── saml.js             # SAML assertions (2 tools)
 │       ├── invite-links.js     # Password resets (2 tools)
